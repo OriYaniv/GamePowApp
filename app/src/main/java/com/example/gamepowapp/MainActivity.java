@@ -3,10 +3,10 @@ package com.example.gamepowapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -23,6 +23,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initListeners();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        getData();
+    }
+
     private void initUI() {
         textViewTopTime = findViewById(R.id.textViewTopTime);
         buttonLevel1 = findViewById(R.id.buttonLevel1);
@@ -34,6 +41,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonLevel1.setOnClickListener(this);
         buttonLevel2.setOnClickListener(this);
         buttonLevel3.setOnClickListener(this);
+    }
+
+    private void getData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+
+        textViewTopTime.setText(String.valueOf(sharedPreferences.getInt("numTimer", 0)));
     }
 
     @Override
